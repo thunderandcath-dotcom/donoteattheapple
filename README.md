@@ -45,8 +45,8 @@
 
   /* 이미지 프레임 — 크게 조정 */
   .frame{
-    width:720px;           /* 데스크톱 기본 너비 */
-    max-width:60vw;        /* 화면 너비의 60%까지 */
+    width:720px;
+    max-width:60vw;
     min-width:260px;
     position:relative;
     border-radius:12px;
@@ -57,39 +57,6 @@
   }
   .img-wrap{ position:relative; width:100%; border-radius:10px; overflow:hidden; }
   .frame img{ display:block; width:100%; height:auto; object-fit:cover; transform: translateZ(0); }
-
-  /* 글리치 레이어 (아주 약함) */
-  .glitch-layer{ position:absolute; inset:0; pointer-events:none; }
-  .glitch-layer img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; top:0; left:0; }
-
-  .glitch-r{ mix-blend-mode:screen; opacity:0.22; filter: blur(0.6px) saturate(0.9); }
-  .glitch-g{ mix-blend-mode:screen; opacity:0.18; filter: blur(0.6px) saturate(0.9); }
-  .glitch-b{ mix-blend-mode:screen; opacity:0.20; filter: blur(0.6px) saturate(0.95); }
-
-  @keyframes glitchShift {
-    0% { transform: translate(0,0); clip-path: inset(0 0 0 0); }
-    12% { transform: translate(-1px, -0.5px); clip-path: inset(6% 0 80% 0); }
-    24% { transform: translate(1px, 0.6px); clip-path: inset(70% 0 8% 0); }
-    36% { transform: translate(-0.6px, -0.4px); clip-path: inset(18% 0 50% 0); }
-    48% { transform: translate(0.8px, 0.5px); clip-path: inset(0 0 36% 0); }
-    60% { transform: translate(-0.7px, -0.6px); clip-path: inset(28% 0 18% 0); }
-    72% { transform: translate(0.5px, 0.4px); clip-path: inset(0 0 56% 0); }
-    84% { transform: translate(-0.4px, -0.3px); clip-path: inset(12% 0 48% 0); }
-    100% { transform: translate(0,0); clip-path: inset(0 0 0 0); }
-  }
-  .glitch-r { animation: glitchShift 6s infinite ease-in-out; }
-  .glitch-g { animation: glitchShift 7s infinite ease-in-out reverse; }
-  .glitch-b { animation: glitchShift 5.5s infinite ease-in-out; }
-
-  .scanline{
-    position:absolute; inset:0;
-    background-image:
-      linear-gradient(rgba(255,255,255,0.01) 1px, transparent 1px),
-      repeating-linear-gradient(0deg, rgba(255,255,255,0.01) 0 1px, transparent 1px 3px);
-    background-size:100% 4px, 100% 8px;
-    mix-blend-mode:overlay; opacity:0.06; animation: scanMove 12s linear infinite; pointer-events:none;
-  }
-  @keyframes scanMove { from { background-position:0 0; } to { background-position:0 120px; } }
 
   /* 텍스트 스타일 */
   .title{ font-size: clamp(18px, 3vw, 26px); font-weight:800; margin-bottom:6px; text-align:center; }
@@ -124,14 +91,8 @@
     <div class="col left">
       <div class="frame" aria-hidden="false">
         <div class="img-wrap">
-          <!-- 같은 폴더에 '낙원농원.png' 파일을 넣으세요 -->
-          <img id="mainImage" src="낙원농원.png" alt="초대장 이미지" />
-          <div class="glitch-layer" aria-hidden="true">
-            <img class="glitch-r" id="gR" src="" alt="" />
-            <img class="glitch-g" id="gG" src="" alt="" />
-            <img class="glitch-b" id="gB" src="" alt="" />
-            <div class="scanline"></div>
-          </div>
+          <!-- 같은 폴더에 'animation.gif' 파일을 넣으세요 -->
+          <img id="mainImage" src="animation.gif" alt="초대장 애니메이션" loading="lazy" />
         </div>
       </div>
     </div>
@@ -160,24 +121,5 @@
       </div>
     </div>
   </main>
-
-<script>
-  (function(){
-    const main = document.getElementById('mainImage');
-    const r = document.getElementById('gR');
-    const g = document.getElementById('gG');
-    const b = document.getElementById('gB');
-
-    function applySrc(){
-      const src = main.getAttribute('src') || '';
-      r.src = src; g.src = src; b.src = src;
-      r.style.transform = 'translate(-1px, -0.5px)';
-      g.style.transform = 'translate(0.8px, 0.6px)';
-      b.style.transform = 'translate(0px, 0px)';
-    }
-
-    if(main.complete){ applySrc(); } else { main.addEventListener('load', applySrc); }
-  })();
-</script>
 </body>
 </html>
